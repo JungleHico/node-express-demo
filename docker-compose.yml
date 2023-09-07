@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  node-bundle:
+    build:
+      context: ./
+    image: node-bundle:latest
+    container_name: node-bundle
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
