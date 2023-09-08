@@ -9,3 +9,19 @@ services:
     ports:
       - '3000:3000'
     restart: unless-stopped
+
+  mongo:
+    image: mongo:4.4.0
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongodb
+      - MONGO_INITDB_ROOT_PASSWORD=mongodb
+    volumes:
+      # 数据库数据
+      - ./mongodb/data:/data/db
+      # 数据库日志
+      - ./mongodb/log:/var/log/mongodb
+      # 初始化脚本
+      - ./mongodb/init.js:/docker-entrypoint-initdb.d/init.js

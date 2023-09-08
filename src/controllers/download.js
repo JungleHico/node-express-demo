@@ -12,9 +12,7 @@ downloadRouter.get('/*', (req, res) => {
     if (!err) {
       res.sendFile(filePath);
     } else {
-      res.status(404).json({
-        msg: 'File not found',
-      });
+      res.error('File not found', 404);
     }
   });
 });

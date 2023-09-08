@@ -31,15 +31,9 @@ const upload = multer({ storage });
 // 上传单个文件，且字段名为file
 uploadRouter.post('', upload.single('file'), (req, res) => {
   if (!req.file) {
-    res.status(400).json({
-      msg: 'Params error',
-    });
+    res.error('Params error', 400);
   } else {
-    res.json({
-      status: 200,
-      data: req.file.filename,
-      msg: 'Success',
-    });
+    res.success(req.file.filename);
   }
 });
 
