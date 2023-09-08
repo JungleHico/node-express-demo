@@ -4,7 +4,7 @@ import tokenConfig from '../config/token.js';
 // 免鉴权白名单
 const whiteList = [
   { path: '/login', method: 'POST' },
-  { path: '/login/register', method: 'GET' },
+  { path: '/login/register', method: 'POST' },
 ];
 
 // token鉴权中间件
