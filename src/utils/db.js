@@ -9,6 +9,7 @@ export default async function connectDatabase() {
     await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000, // 超时
     });
     console.log('MongoDB connected');
   } catch (error) {
