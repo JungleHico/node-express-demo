@@ -3,7 +3,7 @@ import User from '../models/user.js';
 import { createToken } from '../middlewares/token.js';
 import Joi from 'joi';
 import bcrypt from 'bcryptjs';
-import { getSequence } from '../controllers/counter.js';
+import { getSequence } from '../models/counter.js';
 
 const loginRouter = express.Router();
 

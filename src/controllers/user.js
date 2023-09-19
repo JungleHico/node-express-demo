@@ -37,12 +37,30 @@ userRouter.put('/:id', async (req, res) => {
 
   try {
     const id = req.params.id;
+
+    const user = await User.findOne({ userId: id });
+    if (!user) {
+      return res.error('User not found', 404);
+    }
+
     await User.updateOne({ userId: id }, req.body);
-    const user = await User.findOne(
+    const modifiedUser = await User.findOne(
       { userId: id },
       { _id: 0, password: 0, __v: 0 }
     );
-    res.success(user);
+
+    res.success(modifiedUser);
+  } catch (error) {
+    res.error(error.message);
+  }
+});
+
+// 删除用户
+userRouter.delete('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await User.deleteOne({ userId: id });
+    res.success(result);
   } catch (error) {
     res.error(error.message);
   }

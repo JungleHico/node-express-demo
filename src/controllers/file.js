@@ -1,15 +1,16 @@
 import express from 'express';
 import multer from 'multer';
 import fs from 'fs';
+import getFilePath from '../utils/filePath.js';
 
-const uploadRouter = express.Router();
+const fileRouter = express.Router();
 
+// 使用multer中间件进行文件上传
 const storage = multer.diskStorage({
   // 文件存储路径
   destination(req, file, callback) {
     const path = 'data/files/';
-    // callback(null, 'data/files/');
-    // 如果没有上传目录则创建
+    // 如果没有目录则创建
     fs.mkdir(path, { recursive: true }, (err) => {
       if (err) {
         console.log(err);
@@ -26,10 +27,11 @@ const storage = multer.diskStorage({
     );
   },
 });
+
 const upload = multer({ storage });
 
-// 上传单个文件，且字段名为file
-uploadRouter.post('', upload.single('file'), (req, res) => {
+// 文件上传
+fileRouter.post('/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
     res.error('Params error', 400);
   } else {
@@ -37,4 +39,18 @@ uploadRouter.post('', upload.single('file'), (req, res) => {
   }
 });
 
-export default uploadRouter;
+// 文件下载
+fileRouter.get('/download/*', (req, res) => {
+  const url = req.url.slice('/download'.length);
+  const filePath = getFilePath(`./data/files${url}`);
+
+  fs.stat(filePath, (err, stat) => {
+    if (!err) {
+      res.sendFile(filePath);
+    } else {
+      res.error('File not found', 404);
+    }
+  });
+});
+
+export default fileRouter;

@@ -6,8 +6,7 @@ import { authorization } from './middlewares/token.js';
 import defaultPagination from './middlewares/defaultPagination.js';
 import loginRouter from './controllers/login.js';
 import userRouter from './controllers/user.js';
-import uploadRouter from './controllers/upload.js';
-import downloadRouter from './controllers/download.js';
+import fileRouter from './controllers/file.js';
 import useWebSocketRouter from './controllers/websocket.js';
 import error404Router from './controllers/error404.js';
 
@@ -32,8 +31,7 @@ app.use(defaultPagination);
 // 路由
 app.use('/login', loginRouter);
 app.use('/user', userRouter);
-app.use('/upload', uploadRouter);
-app.use('/download', downloadRouter);
+app.use('/file', fileRouter);
 useWebSocketRouter(app, '/ws');
 // 其他路由返回404
 app.use('/*', error404Router);

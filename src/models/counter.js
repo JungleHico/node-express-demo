@@ -1,12 +1,17 @@
 import mongoose from 'mongoose';
 
-const counterSchema = new mongoose.Schema({
-  model: {
-    type: String,
-    unique: true,
+const counterSchema = new mongoose.Schema(
+  {
+    model: {
+      type: String,
+      unique: true,
+    },
+    seq: Number,
   },
-  seq: Number,
-});
+  {
+    timestamps: true,
+  }
+);
 
 const Counter = mongoose.model('counter', counterSchema);
 
