@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import autoIncrement from '../utils/autoIncrement.js';
 
 const userSchema = new mongoose.Schema(
   {
@@ -18,6 +19,11 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model('user', userSchema);
+userSchema.plugin(autoIncrement, {
+  model: 'User',
+  field: 'userId',
+});
+
+const User = mongoose.model('User', userSchema);
 
 export default User;

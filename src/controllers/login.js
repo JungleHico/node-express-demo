@@ -3,7 +3,6 @@ import User from '../models/user.js';
 import { createToken } from '../middlewares/token.js';
 import Joi from 'joi';
 import bcrypt from 'bcryptjs';
-import { getSequence } from '../models/counter.js';
 
 const loginRouter = express.Router();
 
@@ -62,9 +61,7 @@ loginRouter.post('/register', async (req, res) => {
     const hashedPassword = bcrypt.hashSync(password, salt);
 
     // 创建用户
-    const userId = await getSequence('user');
     const newUser = new User({
-      userId,
       username,
       password: hashedPassword,
       status: 1,
